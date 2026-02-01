@@ -1,3 +1,4 @@
 {
-  "/home/ubuntu": "TRUST_PARENT"
+  "/home/ubuntu": "TRUST_PARENT",
+  "/src": "TRUST_FOLDER"
 }

@@ -7,12 +7,14 @@ RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
     && apt-get install -y libjemalloc-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Create a hummingbird user and group with /app as its home directory
+RUN mkdir -p /src
+RUN chown ubuntu:ubuntu /src
+
+# Set up the basic user home directory pieces
 WORKDIR /home/ubuntu
 USER ubuntu
 RUN mkdir -p /home/ubuntu/.gemini
 COPY .bash_profile /home/ubuntu/.bash_profile
-RUN chown -R ubuntu:ubuntu /home/ubuntu
 
 # NODEJS via NVM
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
@@ -23,4 +25,5 @@ RUN NVM_DIR=/home/ubuntu/.nvm && . "$NVM_DIR/nvm.sh" && nvm install --lts
 RUN NVM_DIR=/home/ubuntu/.nvm && . "$NVM_DIR/nvm.sh" && npm install -g @google/gemini-cli
 COPY .gemini/settings.json /home/ubuntu/.gemini/settings.json
 COPY .gemini/trustedFolders.json /home/ubuntu/.gemini/trustedFolders.json
-RUN chown -R ubuntu:ubuntu /home/ubuntu/.gemini
+
+WORKDIR /src
