@@ -14,16 +14,22 @@ RUN chown ubuntu:ubuntu /src
 WORKDIR /home/ubuntu
 USER ubuntu
 RUN mkdir -p /home/ubuntu/.gemini
-COPY .bash_profile /home/ubuntu/.bash_profile
 
 # NODEJS via NVM
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 ENV NVM_DIR=/home/ubuntu/.nvm
 RUN NVM_DIR=/home/ubuntu/.nvm && . "$NVM_DIR/nvm.sh" && nvm install --lts
+RUN echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+
+# jscpd to look for copy/paste code
+RUN NVM_DIR=/home/ubuntu/.nvm && . "$NVM_DIR/nvm.sh" && npm install -g jscpd
 
 # Gemini CLI
 RUN NVM_DIR=/home/ubuntu/.nvm && . "$NVM_DIR/nvm.sh" && npm install -g @google/gemini-cli
 COPY .gemini/settings.json /home/ubuntu/.gemini/settings.json
 COPY .gemini/trustedFolders.json /home/ubuntu/.gemini/trustedFolders.json
+
+# Claude Code CLI
+RUN curl -fsSL https://claude.ai/install.sh | bash
 
 WORKDIR /src
