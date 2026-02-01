@@ -1,0 +1,19 @@
+{
+  "security": {
+    "folderTrust": {
+      "enabled": true
+    },
+    "auth": {
+      "selectedType": "gemini-api-key"
+    }
+  },
+  "ui": {
+    "hideTips": true,
+    "hideBanner": false,
+    "hideFooter": true
+  },
+  "experimental": {
+    "plan": true
+  }
+}
+
