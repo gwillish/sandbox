@@ -3,7 +3,7 @@ FROM swift:6.2
 RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
     && apt -q update \
     && apt -q dist-upgrade -y \
-    && apt -q install -y curl vim \
+    && apt -q install -y curl vim jq \
     && apt-get install -y libjemalloc-dev \
     && rm -rf /var/lib/apt/lists/*
 
